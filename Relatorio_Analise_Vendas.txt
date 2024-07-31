@@ -1,0 +1,434 @@
+
+
+Utilizei o JupiterLab do Anaconda instalado local em meu notebook
+Arquivo vendas importado da máquina local via método chunksize do Pandas
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------
+#1. Implemente uma solução para ler o arquivo 'vendas_grandes.csv' de forma eficiente, considerando o grande volume de dados.
+Resposta:
+O escolhido foi o chunksize do Pandas = 1.000.000 em função do melhor tempo obtido: 5,0 segundos. (ver testes de cronômetro abaixo)
+chunksize = 2.000.000 ==> 5,2 segundos
+chunksize = 1.000.000 ==> 5,0 segundos
+chunksize = 100.000 ==> 5,5 segundos
+chunksize = 10.0000 ==> 6,0 segundos
+
+Porém para gerar o relatório final, alterei o chunksize para 5.000.000, assim obtive os valores totais para apresentação e entrega.
+
+#Detalhe Máquina utilizada - Notebook Dell (Processador intel core ultra 9) 32GB de RAM
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------
+#2. Identifique o produto mais vendido em termos de quantidade e canal.
+Resposta: O item mais vendido foi (Baby Food) com 416.765 (Units Sold)
+
+O método utilizado foi agrupamento pelo campo (Item Type), retornando as colunas (Sales Channel) e (Units Sold) com as quantidades vendidas.
+
+
+Principal váriavel: Q2 = vendas_Sales_Channel_Units_Sold.groupby('Item Type').count()
+
+Resposta:
+Item Type               Sales Channel  Units Sold
+                                 
+Baby Food               416765      	416765
+Beverages               416603      	416603
+Cereal                  416666      	416666
+Clothes                 416633      	416633
+Cosmetics               416711      	416711
+Fruits                  416571      	416571
+Household               416666      	416666
+Meat                    416653      	416653
+Office Supplies         416822      	416822
+Personal Care           416524      	416524
+Snacks                  416715      	416715
+Vegetables              416671      	416671
+
+#---------------------------------------------------------------------------------------------------------------------------------------
+#3. Determine qual pais e região teve o maior volume de vendas (em valor).
+Resposta: A região e país com maior número de vendas, foram respectivamente: Região: Sub-Saharan Africa com 6.486.855.992 (Units_Sold) e País: Liberia com 136.188.169  (Units_Sold)                       
+O método utilizado foi agrupar por (Region) e (Country) e somar as (Units_Sold)
+
+
+Principal váriavel: Q3 = vendas_Region_Country_Units_Sold.groupby(['Region','Country']).sum('Units_Sold').sort_index(ascending=True)
+print(Q3)
+
+Resposta:
+                                   Units Sold
+Region                                       
+Sub-Saharan Africa                 6486855992
+Europe                             6483012669
+Asia                               3650353809
+Middle East and North Africa       3107899168
+Central America and the Caribbean  2703316374
+Australia and Oceania              2028012493
+North America                       540504802
+
+                                                                   Units Sold
+Region                            Country                                     
+Sub-Saharan Africa                Liberia                            136188169
+Middle East and North Africa      Afghanistan                        135941343
+Australia and Oceania             Federated States of Micronesia     135898227
+Sub-Saharan Africa                Cote d'Ivoire                      135885228
+Asia                              Laos                               135839983
+Sub-Saharan Africa                Rwanda                             135827825
+Central America and the Caribbean Belize                             135768569
+Asia                              Philippines                        135662713
+Central America and the Caribbean Costa Rica                         135648740
+Middle East and North Africa      Jordan                             135593366
+Europe                            Romania                            135553869
+Middle East and North Africa      Egypt                              135547732
+Sub-Saharan Africa                Lesotho                            135544883
+Europe                            Macedonia                          135530435
+Middle East and North Africa      Pakistan                           135524647
+Central America and the Caribbean Panama                             135513690
+Europe                            Andorra                            135509286
+Middle East and North Africa      Syria                              135499525
+Europe                            Kosovo                             135498804
+Australia and Oceania             East Timor                         135497092
+Central America and the Caribbean Trinidad and Tobago                135496621
+Sub-Saharan Africa                Sao Tome and Principe              135478497
+Asia                              Singapore                          135474501
+Australia and Oceania             Tonga                              135469782
+Asia                              Taiwan                             135469641
+Sub-Saharan Africa                Zambia                             135448748
+Asia                              Brunei                             135448666
+                                  China                              135431059
+Central America and the Caribbean Cuba                               135414364
+                                  Jamaica                            135410589
+Sub-Saharan Africa                Namibia                            135398959
+                                  Benin                              135375501
+Europe                            Slovenia                           135373315
+Asia                              South Korea                        135363759
+Central America and the Caribbean El Salvador                        135361678
+Australia and Oceania             Papua New Guinea                   135359250
+Asia                              Maldives                           135355003
+                                  Cambodia                           135343535
+Europe                            Liechtenstein                      135340533
+Central America and the Caribbean Saint Kitts and Nevis              135339787
+Europe                            Greece                             135338690
+Sub-Saharan Africa                Madagascar                         135328186
+Europe                            Sweden                             135317073
+Sub-Saharan Africa                Gabon                              135314687
+Asia                              Bhutan                             135309721
+Europe                            Monaco                             135307095
+Sub-Saharan Africa                Uganda                             135306691
+Middle East and North Africa      Iraq                               135302613
+Sub-Saharan Africa                Tanzania                           135302212
+Middle East and North Africa      United Arab Emirates               135301777
+Sub-Saharan Africa                Seychelles                         135295072
+Middle East and North Africa      Turkey                             135292245
+Central America and the Caribbean Guatemala                          135286921
+Sub-Saharan Africa                Eritrea                            135283959
+Europe                            Germany                            135281511
+Australia and Oceania             Samoa                              135280659
+Sub-Saharan Africa                Mali                               135280501
+Asia                              Indonesia                          135280493
+                                  Myanmar                            135277689
+Sub-Saharan Africa                Chad                               135273312
+Europe                            Spain                              135256898
+Sub-Saharan Africa                Guinea-Bissau                      135256458
+Asia                              India                              135253294
+Sub-Saharan Africa                Mauritania                         135251935
+                                  Kenya                              135249224
+                                  Mauritius                          135246109
+                                  Senegal                            135245409
+Asia                              Kyrgyzstan                         135238807
+Europe                            Ireland                            135237883
+                                  Bosnia and Herzegovina             135233221
+Australia and Oceania             Palau                              135228564
+Europe                            Armenia                            135225970
+Australia and Oceania             Tuvalu                             135221269
+Sub-Saharan Africa                Malawi                             135202107
+Europe                            Montenegro                         135201984
+North America                     Greenland                          135188157
+Middle East and North Africa      Iran                               135184209
+Sub-Saharan Africa                Cape Verde                         135179118
+Asia                              North Korea                        135176059
+Middle East and North Africa      Israel                             135175879
+North America                     Canada                             135173702
+Central America and the Caribbean Dominica                           135172721
+Europe                            Hungary                            135167640
+North America                     United States of America           135166246
+Sub-Saharan Africa                South Africa                       135165515
+Australia and Oceania             New Zealand                        135163574
+Europe                            United Kingdom                     135157161
+Australia and Oceania             Nauru                              135154177
+Central America and the Caribbean Antigua and Barbuda                135147721
+Europe                            Serbia                             135147392
+Sub-Saharan Africa                Equatorial Guinea                  135146046
+Australia and Oceania             Marshall Islands                   135142218
+Asia                              Kazakhstan                         135133690
+Europe                            Luxembourg                         135131826
+                                  Georgia                            135127053
+Australia and Oceania             Vanuatu                            135126262
+Europe                            Malta                              135122139
+Asia                              Sri Lanka                          135121288
+Sub-Saharan Africa                Niger                              135120115
+Europe                            Bulgaria                           135119008
+Asia                              Nepal                              135118244
+Central America and the Caribbean Haiti                              135111369
+Sub-Saharan Africa                Ethiopia                           135110372
+Europe                            Switzerland                        135108983
+Sub-Saharan Africa                Sierra Leone                       135107324
+Europe                            San Marino                         135097675
+Asia                              Tajikistan                         135093156
+Australia and Oceania             Kiribati                           135091461
+Middle East and North Africa      Yemen                              135088522
+Asia                              Japan                              135081500
+Europe                            Czech Republic                     135079492
+                                  Italy                              135075256
+                                  Austria                            135067590
+                                  France                             135065773
+Asia                              Mongolia                           135057477
+Europe                            Croatia                            135055210
+                                  Poland                             135051840
+Sub-Saharan Africa                Ghana                              135051151
+Europe                            Albania                            135049793
+Middle East and North Africa      Saudi Arabia                       135042610
+Europe                            Finland                            135038803
+Sub-Saharan Africa                Botswana                           135036505
+                                  Mozambique                         135028079
+                                  Sudan                              135025845
+Asia                              Bangladesh                         135024128
+Europe                            Iceland                            135018449
+Middle East and North Africa      Oman                               135016410
+Europe                            Portugal                           135013034
+Middle East and North Africa      Lebanon                            135010262
+Europe                            Russia                             135007160
+Sub-Saharan Africa                Cameroon                           135003176
+Middle East and North Africa      Morocco                            135002425
+Europe                            Estonia                            134997953
+Middle East and North Africa      Algeria                            134995097
+Sub-Saharan Africa                Burkina Faso                       134991244
+Middle East and North Africa      Bahrain                            134980060
+North America                     Mexico                             134976697
+Central America and the Caribbean The Bahamas                        134973604
+                                  Saint Vincent and the Grenadines   134966778
+                                  Grenada                            134963383
+Sub-Saharan Africa                Central African Republic           134955353
+                                  Burundi                            134945749
+                                  South Sudan                        134926039
+Central America and the Caribbean Honduras                           134921282
+Australia and Oceania             Fiji                               134894867
+Asia                              Thailand                           134892988
+Central America and the Caribbean Dominican Republic                 134889131
+Europe                            Latvia                             134888726
+                                  Denmark                            134887779
+                                  Cyprus                             134887604
+Middle East and North Africa      Somalia                            134873766
+Europe                            Norway                             134864643
+Sub-Saharan Africa                Democratic Republic of the Congo   134863684
+                                  Togo                               134851102
+Middle East and North Africa      Libya                              134840009
+Sub-Saharan Africa                Nigeria                            134839713
+                                  Zimbabwe                           134836111
+Asia                              Uzbekistan                         134830680
+Middle East and North Africa      Tunisia                            134809248
+Australia and Oceania             Australia                          134805860
+Europe                            Moldova                            134802722
+Asia                              Turkmenistan                       134799259
+Central America and the Caribbean Barbados                           134787946
+Sub-Saharan Africa                Comoros                            134777423
+                                  Djibouti                           134755672
+                                  The Gambia                         134740190
+Europe                            Belgium                            134725378
+Middle East and North Africa      Kuwait                             134701296
+Asia                              Vietnam                            134696652
+Middle East and North Africa      Azerbaijan                         134692836
+Australia and Oceania             Solomon Islands                    134679231
+Central America and the Caribbean Saint Lucia                        134666704
+Sub-Saharan Africa                Guinea                             134645306
+Europe                            Ukraine                            134626245
+Sub-Saharan Africa                Republic of the Congo              134603147
+                                  Swaziland                          134594994
+Asia                              Malaysia                           134579824
+Sub-Saharan Africa                Angola                             134573347
+Europe                            Slovakia                           134564310
+                                  Netherlands                        134537688
+                                  Vatican City                       134515340
+                                  Lithuania                          134493249
+Middle East and North Africa      Qatar                              134483291
+Central America and the Caribbean Nicaragua                          134474776
+Europe                            Belarus                            134313188
+
+
+
+#---------------------------------------------------------------------------------------------------------------------------------------
+#4. Calcule a média de vendas mensais por produto, considerando o período dos dados disponíveis.
+Resposta: Ver lista gerada abaixo
+
+O método utilizado foi o comando "mean" para saber a média das 'Units Sold' por mês, 
+devido o campo 'Order Date' estar com dia mês e ano, foi necessário separar o mês como coluna = date_col.month
+Como resultado temos a quantidade de Itens vendidos por mês, numerados de 1 a 12 meses
+
+vendas_Q4.groupby(['Item Type','Order Date']).mean('Units Sold')
+
+
+date_col = pd.DatetimeIndex(vendas_Q4['Order Date'])
+#vendas_Q4['Year'] = date_col.year
+vendas_Q4['Month'] = date_col.month
+#vendas_Q4['Day'] = date_col.day
+print(vendas_Q4)
+
+Q4 = vendas_Q4.groupby(['Item Type','Month']).mean('Units Sold')
+
+
+
+Resposta:
+		
+Item Type		Month	Units Sold
+Baby Food		1		4999.038072
+				2		4999.182761
+				3		4997.540845
+				4		5001.295379
+				5		5000.030245
+				6		4992.563526
+				7		5002.751488
+				8		4992.221237
+				9		4997.495346
+				10		5001.919186
+				11		4987.724460
+				12		5002.585726
+				
+Beverages		1		4993.132032
+				2		4997.994765
+				3		4991.268793
+				4		5008.421606
+				5		5010.528154
+				6		5003.649691
+				7		5003.330696
+				8		4999.080156
+				9		5007.676984
+				10		4999.410129
+				11		5007.756565
+				12		4996.263193
+				
+Cereal			1		5000.782394
+				2		5008.668564
+				3		4998.517186
+				4		4999.960410
+				5		5004.231345
+				6		4991.476445
+				7		5003.748179
+				8		4992.693110
+				9		5007.709114
+				10		4995.535603
+				11		5002.288040
+				12		4992.647585
+				
+Clothes			1		5000.337888
+				2		4994.206699
+				3		5000.962029
+				4		5006.229601
+				5		4998.985972
+				6		4995.898858
+				7		5001.042413
+				8		4993.023659
+				9		5005.225192
+				10		4998.497419
+				11		5009.993188
+				12		5001.003733
+				
+Cosmetics		1		4999.863353
+				2		5002.541898
+				3		5006.772324
+				4		4998.058488
+				5		4996.231120
+				6		4996.389473
+				7		4999.300517
+				8		4999.908863
+				9		4998.000696
+				10		5012.626585
+				11		4992.102915
+				12		4997.708063
+				
+Fruits			1		5001.354596
+				2		4994.393103
+				3		4999.612746
+				4		5000.983925
+				5		4990.912016
+				6		5000.858166
+				7		4999.004375
+				8		5009.370761
+				9		4992.908833
+				10		4992.287745
+				11		5002.645204
+				12		4997.172669
+				
+Household		1		5000.371238
+				2		5002.285555
+				3		4998.923499
+				4		4996.799424
+				5		5002.339409
+				6		5011.619969
+				7		4997.008450
+				8		4997.350634
+				9		4998.581271
+				10		5004.519532
+				11		4994.129952
+				12		5000.546269
+				
+Meat			1		4995.142559
+				2		4993.808718
+				3		5008.122621
+				4		4989.277801
+				5		5009.817382
+				6		4993.955450
+				7		5000.848259
+				8		5006.708431
+				9		5003.828733
+				10		5010.605476
+				11		5010.053441
+				12		5003.208198
+				
+Office Supplies	1		5008.426298
+				2		4997.655998
+				3		5011.190417
+				4		5001.700823
+				5		5000.824523
+				6		5004.832010
+				7		4987.478331
+				8		4998.094433
+				9		5008.373197
+				10		5005.251445
+				11		4994.857023
+				12		4996.699550
+				
+Personal Care	1		4988.106054
+				2		5000.744061
+				3		5004.803366
+				4		4999.950858
+				5		4998.576817
+				6		5002.157364
+				7		5003.691961
+				8		4995.839207
+				9		5002.068491
+				10		5003.295002
+				11		4988.957544
+				12		5000.840602
+				
+Snacks			1		4985.988749
+				2		4997.404705
+				3		5002.320363
+				4		5019.504896
+				5		5007.367802
+				6		4995.160702
+				7		5003.736385
+				8		4998.662203
+				9		4991.547461
+				10		5004.925889
+				11		4998.331688
+				12		4996.075636
+				
+Vegetables		1		4996.426054
+				2		4994.145991
+				3		4997.025247
+				4		4995.675739
+				5		4996.315756
+				6		5002.973941
+				7		5000.922952
+				8		5003.451812
+				9		4998.798803
+				10		4995.427257
+				11		4994.351098
+				12		5010.089674
